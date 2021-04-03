@@ -1,69 +1,67 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import { TextField } from 'final-form-material-ui';
 import Container from '@material-ui/core/Container';
+import { Form, Field } from 'react-final-form';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+const validate = (values) => {
+  const errors = {};
+  if (!values.login) {
+    errors.login = 'Required';
+  }
+  if (!values.password) {
+    errors.password = 'Required';
+  }
 
-export default function SignIn() {
-  const classes = useStyles();
+  return errors;
+};
 
+export const LoginForm = ({ onSubmit }) => {
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="login"
-            label="Login"
-            name="login"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
+    <Form
+      onSubmit={onSubmit}
+      validate={validate}
+      render={({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <Container component='main' maxWidth='xs'>
+            <Grid  container spacing={2}>
+              <Grid item xs={12}>
+                <Field
+                  required
+                  fullWidth
+                  name='login'
+                  component={TextField}
+                  type='text'
+                  label='Login'
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  required
+                  fullWidth
+                  name='password'
+                  component={TextField}
+                  type='password'
+                  label='Password'
+                />   
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+                  color='primary'
+                >
+                  Sign In
+                </Button>
+              </Grid>
+          </Grid>
+          </Container>
         </form>
-      </div>
-    </Container>
+      )}
+    />
   );
 }
+
+export default LoginForm
