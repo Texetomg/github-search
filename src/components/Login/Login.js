@@ -7,7 +7,6 @@ import LoginForm from './LoginForm'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import { findByLabelText } from '@testing-library/dom';
 
 const Login = () => {
   const dispatch = useDispatch()
