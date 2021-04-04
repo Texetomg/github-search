@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@material-ui/core/Box';
 import { loginUser } from '../../redux/actions/authActions'
-import firebase from "../../config/firebase-config"
+import firebase from '../../config/firebase-config'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import LoginForm from './LoginForm'
 import { useDispatch } from 'react-redux'
@@ -18,11 +18,9 @@ const Login = () => {
       dispatch(loginUser({
         user: {
           login,
-          avatara: null
+          avatar: null
         }
-      }))
-      history.push('/')
-      toast.success('Success!')
+      }, history))
     } else {
       toast.error('This is an error!');
     }
@@ -39,22 +37,20 @@ const Login = () => {
         dispatch(loginUser({
           user: {
             login: displayName,
-            avatara: photoURL
+            avatar: photoURL
           }
-        }))
-        history.push('/')
-        toast.success('Success!')
+        }, history))
       },
       signInFailure: () => {
-        toast.error('This is an error!');
+        toast.error('This is an error!')
       }
     }
   }
 
   return (
     <Box
-      display="flex"
-      justifyContent="center"
+      display='flex'
+      justifyContent='center'
       flexDirection='column'
       height='90vh'
     >
