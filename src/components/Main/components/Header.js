@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ user, handleLogout, handleSearch }) => {
+const Header = ({ user, handleLogout }) => {
   const classes = useStyles();
   return (
     <AppBar position='static'>

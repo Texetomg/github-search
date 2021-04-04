@@ -2,13 +2,12 @@ import React from 'react'
 import UserInfo from './components/UserInfo'
 import { makeStyles } from '@material-ui/core/styles'
 import { useGetAxiosFetch } from '../../helpers/useAxios'
-import { LinearProgress, Container, Card, CardContent } from '@material-ui/core'
+import { Container, Card, CardContent } from '@material-ui/core'
 import Header from './components/Header'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser } from '../../redux/actions/authActions'
 import RepoTable from './components/RepoTable'
-import SearchBar from 'material-ui-search-bar'
-import toast from 'react-hot-toast'
+import SearchBarWithLoader from './components/SearchBarWithLoader'
 
 const useStyles = makeStyles(() => ({
   searchContainer: {
@@ -49,17 +48,13 @@ const Main = () => {
 
   return (
     <>
-      <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
+      <Header user={user} handleLogout={handleLogout} />
       <Container className={classes.container}>
-        <div className={classes.searchContainer}>
-        <SearchBar
-          onRequestSearch={handleSearch}
-          className={classes.search}
+        <SearchBarWithLoader
+          handleSearch={handleSearch}
+          loading={userLoading || repoLoading}
         />
-        {(userLoading || repoLoading) && <LinearProgress  className={classes.search}/>}
-        
-        </div>
-       {userData && 
+        {userData && 
           <Card className={classes.container}>
             <UserInfo
               data={userData?.data}
