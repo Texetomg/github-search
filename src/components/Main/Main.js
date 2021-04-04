@@ -1,38 +1,41 @@
 import React from 'react'
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { makeStyles } from '@material-ui/core/styles';
+import SearchBar from 'material-ui-search-bar'
+import { makeStyles } from '@material-ui/core/styles'
+import { useGetAxiosFetch } from '../../helpers/useAxios'
+import { LinearProgress } from '@material-ui/core'
+import Header from './components/Header'
+import { useSelector, useDispatch } from 'react-redux'
+import { logoutUser } from '../../redux/actions/authActions'
+import RepoTable from './components/RepoTable'
 
 const useStyles = makeStyles(() => ({
-  title: {
-    flexGrow: 1
-  },
+  search: {
+    margin: '0 auto',
+    maxWidth: 800
+  }
 }));
 
 const Main = () => {
+  const dispatch = useDispatch()
   const classes = useStyles();
+  const user = useSelector(state => state.auth.user)
+  
+  const [{ data : userData, error : userError, loading : userLoading }, sendUserRequest] = useGetAxiosFetch()
+  const [{ data : repoData, error : repoError, loading : repoLoading }, sendRepoRequest] = useGetAxiosFetch()
+  
+  const handleLogout = () => dispatch(logoutUser())
+  const handleSearch = name => (
+    sendUserRequest(`https://api.github.com/users/${name}`)
+      .then((res) => res?.data?.repos_url && sendRepoRequest(res.data.repos_url))
+  )
 
   return (
-    <div>
-       <AppBar position="static">
-        <Toolbar justifyContent='end' display='flex'>
-        <Typography variant="h6" className={classes.title}>
-          Github search
-        </Typography>
-          <Avatar
-            src={AccountCircle}
-          />
-         <IconButton aria-label="search" color="inherit">
-            <ExitToAppIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <>
+      <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
+    
+      {(userLoading || repoLoading) && <LinearProgress  className={classes.search}/>}
+      <RepoTable data={repoData?.data}/>
+    </>
   )
 }
 
