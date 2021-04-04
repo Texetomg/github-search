@@ -27,6 +27,7 @@ export const useGetAxiosFetch = (config = {}) => {
             toast.error('another error happened')
             setLoading(false)
           }
+          setError(err.response.status)
         })
 
       const promise = _.isArray(url) ? Promise.all(url.map(u => sendRequest(u))) : sendRequest(url)

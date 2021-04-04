@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core'
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import Skeleton from '@material-ui/lab/Skeleton'
 
 const columns = [
   { id: 'collapse', label: '', minWidth: 50},
@@ -24,6 +25,17 @@ const columns = [
   { id: 'description', label: 'Description', minWidth: 170 },
   { id: 'stargazers_count', label: 'Stars', minWidth: 170},
 ]
+
+const TableSkeleton = () => (
+  <>
+  <Skeleton height={90}/> 
+  <Skeleton height={90}/> 
+  <Skeleton height={90}/> 
+  <Skeleton height={90}/> 
+  <Skeleton height={90}/>
+  <Skeleton height={90}/> 
+  </>
+)
 
 const useStyles = makeStyles({
   root: {
@@ -35,7 +47,7 @@ const useStyles = makeStyles({
     }
   },
   container: {
-    maxHeight: 600,
+    height: 500,
   },
 })
 
@@ -44,28 +56,28 @@ const Row = ({ columns, data }) => {
   const classes = useStyles()
   return (
     <>
-    <TableRow className={classes.mainRow}>
-      {columns.map((column, i) => {
-        return (
-          column.id === 'collapse' ? (
-            <TableCell>
-              <IconButton
-                aria-label="expand row"
-                size="small"
-                onClick={() => setOpen(!open)}
-              >
-                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-            </TableCell>
-          ) : (
-            <TableCell key={`repo-row-col-${i}`}>
-              {data[column.id]}
-            </TableCell>
+      <TableRow className={classes.mainRow}>
+        {columns.map((column, i) => {
+          return (
+            column.id === 'collapse' ? (
+              <TableCell>
+                <IconButton
+                  aria-label="expand row"
+                  size="small"
+                  onClick={() => setOpen(!open)}
+                >
+                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                </IconButton>
+              </TableCell>
+            ) : (
+              <TableCell key={`repo-row-col-${i}`}>
+                {data[column.id]}
+              </TableCell>
+            )
           )
-        )
-      })}
-    </TableRow>
-    <TableRow>
+        })}
+      </TableRow>
+      <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
@@ -79,13 +91,11 @@ const Row = ({ columns, data }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                
-                    <TableRow>
-                      <TableCell>
-                        111
-                      </TableCell>
-                    </TableRow>
-                  
+                  <TableRow>
+                    <TableCell>
+                      111
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </Box>
@@ -96,7 +106,7 @@ const Row = ({ columns, data }) => {
   )
 }
 
-const RepoTable = ({ data = []}) => {
+const RepoTable = ({ data = [], loading = true }) => {
   const classes = useStyles()
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
@@ -112,36 +122,44 @@ const RepoTable = ({ data = []}) => {
 
   return (
     <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label='sticky table'>
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => (
-              <Row key={`repo-row-${i}`} columns={columns} data={row}/>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component='div'
-        count={data.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      {
+        loading ? (
+          <TableSkeleton/>
+        ) : (
+          <>
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label='sticky table'>
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => (
+                    <Row key={`repo-row-${i}`} columns={columns} data={row}/>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component='div'
+              count={data.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </>
+        )
+      }
     </Paper>
   )
 }
