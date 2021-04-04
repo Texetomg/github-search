@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser } from '../../redux/actions/authActions'
 import RepoTable from './components/RepoTable'
 import SearchBarWithLoader from './components/SearchBarWithLoader'
+import { repoColumns } from '../../config/tables-config'
 
 const useStyles = makeStyles(() => ({
   searchContainer: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles(() => ({
   },
   container: {
     marginTop: 20,
-    height: 660,
+    height: '80vh',
   }
 }));
 
@@ -59,10 +60,12 @@ const Main = () => {
             <UserInfo
               data={userData?.data}
               loading={userLoading}
+              usererror={userError}
             />
             <CardContent>
               <RepoTable
                 data={repoData?.data}
+                columns={repoColumns}
                 loading={repoLoading}
               />
             </CardContent>

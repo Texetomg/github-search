@@ -1,6 +1,6 @@
 import Skeleton from '@material-ui/lab/Skeleton'
 
-const TableSkeleton = () => (
+export const TableXlSkeleton = () => (
   <>
     <Skeleton height={80}/>  
     <Skeleton height={80}/>  
@@ -12,4 +12,10 @@ const TableSkeleton = () => (
   </>
 )
 
-export default TableSkeleton
+export const TableXsSkeleton = () => (
+  <>
+    <Skeleton height={40}/>  
+    <Skeleton height={40}/>  
+    <Skeleton height={40}/> 
+  </>
+)

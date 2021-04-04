@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
 
 const SearchBarWithLoader = ({ handleSearch, loading = false}) => {
   const classes = useStyles();
-  console.log(loading)
   return (
     <div className={classes.searchContainer}>
       <SearchBar

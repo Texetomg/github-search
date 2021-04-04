@@ -24,7 +24,6 @@ export const useGetAxiosFetch = (config = {}) => {
             setLoading(false)
           }
           else {
-            toast.error('another error happened')
             setLoading(false)
           }
           setError(err.response.status)
