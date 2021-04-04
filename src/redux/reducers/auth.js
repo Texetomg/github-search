@@ -2,7 +2,7 @@ import { SET_CURRENT_USER } from '../actions/types'
 
 const loadState = stateName => {
   const data = localStorage.getItem(stateName)
-  return data ? JSON.parse(data) : {}
+  return data ? JSON.parse(data).user : {}
 }
 
 const initialState = {
