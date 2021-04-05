@@ -35,7 +35,7 @@
     "start": "PORT=8080 react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "homepage": "https://texetomg.github.io/interfax-github-search",
+    "homepage": "https://Texetomg.github.io/interfax",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
