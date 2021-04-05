@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Texetomg/github-search/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/Texetomg/github-search/static/js/main.ca08cc86.chunk.js",
+    "main.js.map": "/Texetomg/github-search/static/js/main.ca08cc86.chunk.js.map",
+    "runtime-main.js": "/Texetomg/github-search/static/js/runtime-main.b707fae7.js",
+    "runtime-main.js.map": "/Texetomg/github-search/static/js/runtime-main.b707fae7.js.map",
+    "static/js/2.78a11b8d.chunk.js": "/Texetomg/github-search/static/js/2.78a11b8d.chunk.js",
+    "static/js/2.78a11b8d.chunk.js.map": "/Texetomg/github-search/static/js/2.78a11b8d.chunk.js.map",
+    "index.html": "/Texetomg/github-search/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/Texetomg/github-search/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.78a11b8d.chunk.js.LICENSE.txt": "/Texetomg/github-search/static/js/2.78a11b8d.chunk.js.LICENSE.txt",
+    "static/media/404.4a407c66.jpeg": "/Texetomg/github-search/static/media/404.4a407c66.jpeg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b707fae7.js",
+    "static/js/2.78a11b8d.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.ca08cc86.chunk.js"
+  ]
+}
