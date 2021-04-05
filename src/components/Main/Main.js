@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import UserInfo from './components/UserInfo'
 import { makeStyles } from '@material-ui/core/styles'
 import { useGetAxiosFetch } from '../../helpers/useAxios'
@@ -9,6 +9,7 @@ import { logoutUser } from '../../redux/actions/authActions'
 import RepoTable from './components/RepoTable'
 import SearchBarWithLoader from './components/SearchBarWithLoader'
 import { repoColumns } from '../../config/tables-config'
+import toast from 'react-hot-toast'
 
 const useStyles = makeStyles(() => ({
   searchContainer: {
@@ -47,6 +48,10 @@ const Main = () => {
       .then((res) => res?.data?.repos_url && sendRepoRequest(res.data.repos_url))
   )
 
+  useEffect(() => {
+    userError === 404 && toast.error('User not found.')
+  }, [userError])
+  
   return (
     <>
       <Header user={user} handleLogout={handleLogout} />
@@ -60,7 +65,7 @@ const Main = () => {
             <UserInfo
               data={userData?.data}
               loading={userLoading}
-              usererror={userError}
+              userError={userError}
             />
             <CardContent>
               <RepoTable

@@ -5,7 +5,6 @@ import {
   TableRow,
   Collapse,
   Box,
-  Typography,
   IconButton
 } from '@material-ui/core'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
@@ -13,6 +12,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import CommitTable from './CommitTable'
 import { commitColumns } from '../../../../config/tables-config'
 import { useGetAxiosFetch } from '../../../../helpers/useAxios'
+import get from 'lodash/get'
 
 const useStyles = makeStyles({
   root: {
@@ -25,6 +25,11 @@ const useStyles = makeStyles({
     '& > *': {
       borderBottom: 'unset'
     }
+  },
+  title: {
+    fontSize: '0.875rem',
+    fontWeight: '500',
+    lineHeight: '1.5rem'
   }
 })
 
@@ -39,7 +44,7 @@ const RepoRow = ({ columns, data, i }) => {
 
   const handleOnClick = () => {
     setOpen(!open)
-    sendCommitRequest(`${data.url}/commits`)
+    !open && sendCommitRequest(`${data.url}/commits`)
   }
 
   return (
@@ -57,7 +62,7 @@ const RepoRow = ({ columns, data, i }) => {
                   {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                 </IconButton>
               ) : (
-                data[column.id]
+                get(data, column.id) || '\u2014'
               )}
             </TableCell>
           )
@@ -66,10 +71,8 @@ const RepoRow = ({ columns, data, i }) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
           <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box margin={1}>
-              <Typography variant='h6' gutterBottom component='div'>
-                Commits
-              </Typography>
+            <Box margin={1}>  
+              <span className={classes.title}>Commits: </span>
               <CommitTable
                 data={commitData?.data}
                 loading={commitLoading}

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
 })
 
-const RepoTable = ({ data = [], columns = [], loading = false }) => {
+const RepoTable = ({ data = [], columns = [], loading }) => {
   const classes = useStyles()
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
@@ -47,11 +47,12 @@ const RepoTable = ({ data = [], columns = [], loading = false }) => {
               <Table stickyHeader aria-label='sticky table'>
                 <TableHead>
                   <TableRow>
-                    {columns.map((column) => (
+                    {columns.map(({ id, label, width }) => (
                       <TableCell
-                        key={column.id}
+                        key={id}
+                        width={width}
                       >
-                        {column.label}
+                        {label}
                       </TableCell>
                     ))}
                   </TableRow>

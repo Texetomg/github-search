@@ -22,6 +22,7 @@ const CommitTable = ({ data = [], columns = [], loading = false }) => {
     setRowsPerPage(+event.target.value)
     setPage(0)
   }
+ 
   return (
     loading ? (
       <TableXsSkeleton/>
@@ -30,11 +31,12 @@ const CommitTable = ({ data = [], columns = [], loading = false }) => {
         <Table size='small' aria-label='purchases'>
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {columns.map(({ id, label, width }) => (
                 <TableCell
-                  key={column.id}
+                  key={id}
+                  width={width}
                 >
-                  {column.label}
+                  {label}
                 </TableCell>
               ))}
             </TableRow>
@@ -42,11 +44,11 @@ const CommitTable = ({ data = [], columns = [], loading = false }) => {
           <TableBody>
             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => (
               <TableRow key={`commit-row-${i}`}>
-                {columns.map((column, j) => {
-                  console.log(row, column.id)
+                {columns.map(({ id, format }, j) => {
+                  const data = get(row, id) 
                   return (
                     <TableCell key={`commit-row-col-${i}-${j}`}>
-                      {get(row,column.id) || '\u2014'}
+                      {format && data ? format(data) : data ? data : '\u2014'}
                     </TableCell>
                   )
                 })}

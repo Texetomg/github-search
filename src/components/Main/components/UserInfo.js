@@ -2,7 +2,6 @@ import React from 'react'
 import { CardHeader, Avatar } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import { makeStyles } from '@material-ui/core/styles'
-import toast from 'react-hot-toast'
 
 const useStyles = makeStyles({
   avatar: {
@@ -14,9 +13,9 @@ const useStyles = makeStyles({
   }
 })
 
-const UserInfo = ({ data = {}, loading = true, usererror }) => {
+const UserInfo = ({ data = {}, loading = true, userError }) => {
   const classes = useStyles()
-  console.log(usererror)
+
   return (
    <CardHeader
       avatar={
