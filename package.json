@@ -1,7 +1,7 @@
 {
   "name": "interfax",
   "version": "0.1.0",
-  "homepage": "https://Texetomg.github.io/githubSearch",
+  "homepage": "https://github.com/Texetomg/github-search",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "PORT=8080 react-scripts start",
-    "predeploy": "npm run build",
+    "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
